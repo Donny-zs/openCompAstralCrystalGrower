@@ -22,9 +22,24 @@ function fillBath()
   
 end
 
+itemManagment()
+  if  !transposer.getStackInSlot(vacoomChest,1) == nil then
+    sleep(SLEEP_TIME)
+    if !transposer.getStackInSlot(vacoomChest,1) == nil then
+    error("Crystal lost!")
+    end
+  end
 
 
+end
 
+while true do
+  if  checkFluid() then
+    sleep(SLEEP_TIME)
+  else
+    itemManagment()
+    sleep(SLEEP_TIME)
+end
 
 --transferItem(sourceSide:number, sinkSide:number, count:number, sourceSlot:number, sinkSlot:number):number
 --compareStacks(side:number, slotA:number, slotB:number, checkNBT:boolean=false):boolean
