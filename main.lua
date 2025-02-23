@@ -8,7 +8,7 @@ local sleep = os.sleep
 local outputChest = 1
 local storage = 2
 local vacoomChest = 4
-local vacoomChestSize = component.transposer.getInventorySize(vacoomChest)
+local vacoomChestSize = component.transposer.getInventorySize(vacoomChest) - 1
 
 --transferItem(sourceSide:number, sinkSide:number, count:number, sourceSlot:number, sinkSlot:number):number
 --compareStacks(side:number, slotA:number, slotB:number, checkNBT:boolean=false):boolean
