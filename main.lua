@@ -5,15 +5,26 @@ local redstone = component.redstone
 local transposer = component.transposer
 local sleep = os.sleep
 
-local outputChest = 1
-local storage = 2
-local vacoomChest = 4
-local vacoomChestSize = component.transposer.getInventorySize(vacoomChest) - 1
+local fluidSensor = 2 --сторона редстоунIO с которой подаётся сигнал о наличии жидкости
+local fluidPlacer = 4 --сторона редстоунIO с которой активируется блок отвечающий за выливание жидкости в мир
+local outputChest = 1 --сторона транспозера - контейнер, который отдаёт кристалл в дроппер
+local storage = 2     --сторона транспозера - хранилище готовых кристаллов
+local vacoomChest = 4 --сторона транспозера - воронка забирающая готовый кристалл
+local vacoomChestSize = component.transposer.getInventorySize(vacoomChest) - 1 --все слоты в воронке - 1
+local compareSlot = component.transposer.getInventorySize(vacoomChest) --последний слот, в котором хранится кристалл для сравнения(кладётся руками)
+local SLEEP_TIME = 10 --время паузы в глобальном цикле и между проверками
+
+function checkFluid() --Возвращает true если жидкость присутствует
+  return redstone.getInput(2) > 0 
+end
+
+function fillBath()
+  
+end
+
+
+
+
 
 --transferItem(sourceSide:number, sinkSide:number, count:number, sourceSlot:number, sinkSlot:number):number
 --compareStacks(side:number, slotA:number, slotB:number, checkNBT:boolean=false):boolean
-
-function checkFluid() --Возвращает true если жидкость присутствует
-  return redstone.getInput(2) != 0 
-end
-
