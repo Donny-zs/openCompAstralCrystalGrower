@@ -19,7 +19,14 @@ function checkFluid() --Возвращает true если жидкость пр
 end
 
 function fillBath()
-  
+  redstone.setOutput(fluidPlacerSide, 15)
+  sleep(2)
+  redstone.setOutput(fluidPlacerSide, 0)
+  if checkFluid() then
+    return true
+  else
+    error("Out of starlight")
+  end
 end
 
 itemManagment()
