@@ -49,7 +49,7 @@ function inventoryParser()
 
 end
 
-itemManagment()
+function itemManagment()
   if  inventoryParser() == nil then
     sleep(SLEEP_TIME)
     if inventoryParser() == nil then
