@@ -29,6 +29,25 @@ function fillBath()
   end
 end
 
+inventoryParser()
+  local crystals = {}
+  local perfect = {}
+
+    -- Проверяем все слоты кроме последнего (эталона)
+    for slot = 1, vacoomChestSize do
+        local stack = transposer.getStackInSlot(vacoomChestSide, slot)
+        if stack then
+                table.insert(crystals, slot)
+            if transposer.compareStacks(vacoomChestSide, slot, compareSlot) then
+                table.insert(perfect, slot)
+            end
+        end
+    end
+    
+    return perfectCrystals
+
+end
+
 itemManagment()
   if  !transposer.getStackInSlot(vacoomChest,1) == nil then
     sleep(SLEEP_TIME)
@@ -37,8 +56,9 @@ itemManagment()
     end
   end
 
-
 end
+
+
 
 while true do
   if  checkFluid() then
