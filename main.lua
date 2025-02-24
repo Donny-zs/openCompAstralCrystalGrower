@@ -44,7 +44,7 @@ inventoryParser()
         end
     end
     
-    return perfectCrystals
+    return {crystals,perfect}
 
 end
 
