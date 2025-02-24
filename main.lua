@@ -49,9 +49,9 @@ inventoryParser()
 end
 
 itemManagment()
-  if  !transposer.getStackInSlot(vacoomChest,1) == nil then
+  if  inventoryParser() == nil then
     sleep(SLEEP_TIME)
-    if !transposer.getStackInSlot(vacoomChest,1) == nil then
+    if inventoryParser() == nil then
     error("Crystal lost!")
     end
   end
