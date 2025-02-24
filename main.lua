@@ -14,6 +14,8 @@ local vacoomChestSize = component.transposer.getInventorySize(vacoomChest) - 1 -
 local compareSlot = component.transposer.getInventorySize(vacoomChest) --последний слот, в котором хранится кристалл для сравнения(кладётся руками)
 local SLEEP_TIME = 10 --время паузы в глобальном цикле и между проверками
 
+local inventory = nil -- placeholder для коллекции результата парсинга инвентаря
+
 function checkFluid() --Возвращает true если жидкость присутствует
   return redstone.getInput(2) > 0 
 end
@@ -29,12 +31,11 @@ function fillBath()
   end
 end
 
-inventoryParser()
+function inventoryParser()
   local crystals = {}
   local perfect = {}
 
-    -- Проверяем все слоты кроме последнего (эталона)
-    for slot = 1, vacoomChestSize do
+    for slot = 1, vacoomChestSize do -- Проверяем все слоты кроме последнего (эталона)
         local stack = transposer.getStackInSlot(vacoomChestSide, slot)
         if stack then
                 table.insert(crystals, slot)
@@ -52,10 +53,19 @@ itemManagment()
   if  inventoryParser() == nil then
     sleep(SLEEP_TIME)
     if inventoryParser() == nil then
-    error("Crystal lost!")
+      error("Crystal lost!")
     end
   end
 
+inventory = inventoryParser()
+
+fillBath()
+
+-- Если в коллекции inventoryParser() только один кристалл - отправляем его на рост, не сверяя перфект он или нет
+-- Если больше одного - проверяем, есть ли перфект и отправляем его в хранилище если он есть,
+-- Если нет перфекта первый из списка отправляется на рост
+
+inventory = nil
 end
 
 
@@ -69,4 +79,3 @@ while true do
 end
 
 --transferItem(sourceSide:number, sinkSide:number, count:number, sourceSlot:number, sinkSlot:number):number
---compareStacks(side:number, slotA:number, slotB:number, checkNBT:boolean=false):boolean
