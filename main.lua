@@ -17,13 +17,13 @@ local SLEEP_TIME = 10 --время паузы в глобальном цикле
 local inventory = nil -- placeholder для коллекции результата парсинга инвентаря
 
 function checkFluid() --Возвращает true если жидкость присутствует
-  return redstone.getInput(2) > 0 
+  return redstone.getInput(fluidSensor) > 0 
 end
 
 function fillBath()
-  redstone.setOutput(fluidPlacerSide, 15)
+  redstone.setOutput(fluidPlacer, 15)
   sleep(2)
-  redstone.setOutput(fluidPlacerSide, 0)
+  redstone.setOutput(fluidPlacer, 0)
   if checkFluid() then
     return true
   else
@@ -36,10 +36,10 @@ function inventoryParser()
   local perfect = {}
 
     for slot = 1, vacoomChestSize do -- Проверяем все слоты кроме последнего (эталона)
-        local stack = transposer.getStackInSlot(vacoomChestSide, slot)
+        local stack = transposer.getStackInSlot(vacoomChest, slot)
         if stack then
                 table.insert(crystals, slot)
-            if transposer.compareStacks(vacoomChestSide, slot, compareSlot) then
+            if transposer.compareStacks(vacoomChest, slot, compareSlot) then
                 table.insert(perfect, slot)
             end
         end
