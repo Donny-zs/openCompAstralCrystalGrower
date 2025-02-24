@@ -50,21 +50,30 @@ function inventoryParser()
 end
 
 function itemManagment()
-  if  inventoryParser() == nil then
+
+  inventory = inventoryParser()
+  if  inventory == nil then
     sleep(SLEEP_TIME)
-    if inventoryParser() == nil then
+    inventory = inventoryParser()
+    if inventory == nil then
       error("Crystal lost!")
     end
   end
 
-inventory = inventoryParser()
-
 fillBath()
+
+
 
 -- Если в коллекции inventoryParser() только один кристалл - отправляем его на рост, не сверяя перфект он или нет
 -- Если больше одного - проверяем, есть ли перфект и отправляем его в хранилище если он есть,
 -- Если нет перфекта первый из списка отправляется на рост
 
+--отправка в жидкость
+  --transposer.transferItem(vacoomChest, outputChest, 1, slot, 1)
+  
+--отправка в хранилище
+  --transposer.transferItem(vacoomChest, storage, 1, slot, 1).
+  
 inventory = nil
 end
 
