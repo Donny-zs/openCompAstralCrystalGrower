@@ -76,6 +76,7 @@ while true do
   else
     itemManagment()
     sleep(SLEEP_TIME)
+  end
 end
 
 --transferItem(sourceSide:number, sinkSide:number, count:number, sourceSlot:number, sinkSlot:number):number
