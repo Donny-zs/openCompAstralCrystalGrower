@@ -15,6 +15,8 @@ local compareSlot = component.transposer.getInventorySize(vacoomChest) --пос�
 local SLEEP_TIME = 10 --время паузы в глобальном цикле и между проверками
 
 local inventory = nil -- placeholder для коллекции результата парсинга инвентаря
+local crystal = nil   -- placeholder для коллекции результата парсинга инвентаря
+local perfect = nil   -- placeholder для коллекции результата парсинга инвентаря
 
 function checkFluid() --Возвращает true если жидкость присутствует
   return redstone.getInput(fluidSensor) > 0 
@@ -60,14 +62,17 @@ function itemManagment()
     end
   end
 
+local crystal = inventory[1]
+local perfect = inventory[2]
+
 fillBath()
 
-if #inventory[crystals] == 1 then
+if #crystal == 1 then
     -- Если в коллекции inventoryParser() только один кристалл - отправляем его на рост, не сверяя перфект он или нет
     --transposer.transferItem(vacoomChest, outputChest, 1, slot, 1)
-  elseif #inventory[crystals] > 1 then
+  elseif #crystal > 1 then
 
-    if #inventory[perfect] > 0 then
+    if #perfect > 0 then
       -- Если больше одного - проверяем, есть ли перфект и отправляем его в хранилище если он есть,
       --transposer.transferItem(vacoomChest, storage, 1, slot, 1).
       --первый не перфект отправялем на рост
