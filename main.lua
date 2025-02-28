@@ -62,6 +62,10 @@ end
 
 function itemManagment()
 
+  if checkCompareCrystal() == nil then
+    error("lost perfect crystal in 27 slot, provide it for compare")
+  end
+  
   local inventory = inventoryParser()
   if  inventory == nil then
     sleep(SLEEP_TIME)
