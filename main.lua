@@ -100,7 +100,7 @@ elseif #crystals > 1 then
       
     else
       -- Если нет перфекта случайный из списка отправляется на рост  
-      transposer.transferItem(vacoomChest, outputChest, 1, random(#crystals), 1)
+      transposer.transferItem(vacoomChest, outputChest, 1, crystals[random(#crystals)], 1)
     end
   else
     error("Crystal lost!")
