@@ -1,9 +1,11 @@
 local component = require("component")
 local computer = require("computer")
 local os = require("os")
+local math = require("math")
 local redstone = component.redstone
 local transposer = component.transposer
 local sleep = os.sleep
+local random = math.random
 
 local fluidSensor = 2 --сторона редстоунIO с которой подаётся сигнал о наличии жидкости
 local fluidPlacer = 4 --сторона редстоунIO с которой активируется блок отвечающий за выливание жидкости в мир
@@ -14,13 +16,12 @@ local vacoomChestSize = component.transposer.getInventorySize(vacoomChest) - 1 -
 local compareSlot = component.transposer.getInventorySize(vacoomChest) --последний слот, в котором хранится кристалл для сравнения(кладётся руками)
 local SLEEP_TIME = 10 --время паузы в глобальном цикле и между проверками
 
-local inventory = nil -- placeholder для коллекции результата парсинга инвентаря
-local crystal = nil   -- placeholder для коллекции результата парсинга инвентаря
-local perfect = nil   -- placeholder для коллекции результата парсинга инвентаря
-local usual = nil     -- placeholder для коллекции результата парсинга инвентаря
-
 function checkFluid() --Возвращает true если жидкость присутствует
   return redstone.getInput(fluidSensor) > 0 
+end
+
+function random(min, max)
+    return math.floor(math.random() * (max - min + 1)) + min
 end
 
 function fillBath()
@@ -37,6 +38,7 @@ end
 function inventoryParser()
   local crystals = {}
   local perfect = {}
+  local usual = {}
 
     for slot = 1, vacoomChestSize do -- Проверяем все слоты кроме последнего (эталона)
         local stack = transposer.getStackInSlot(vacoomChest, slot)
@@ -56,7 +58,7 @@ end
 
 function itemManagment()
 
-  inventory = inventoryParser()
+  local inventory = inventoryParser()
   if  inventory == nil then
     sleep(SLEEP_TIME)
     inventory = inventoryParser()
@@ -65,31 +67,36 @@ function itemManagment()
     end
   end
 
-local crys = inventory[1]
-local perf = inventory[2]
-local usua = inventory[3]
+local crystals = inventory[1]
+local perfect = inventory[2]
+local usual = inventory[3]
 
-if #crys == vacoomChestSize then
+if #crystals == vacoomChestSize then
     error("Do cuttings to gems!")
 end
   
 fillBath()
 
-if #crys == 1 then
-    -- Если в коллекции inventoryParser() только один кристалл - отправляем его на рост, не сверяя перфект он или нет
-    --transposer.transferItem(vacoomChest, outputChest, 1, slot, 1)
-  elseif #crystal > 1 then
+if #crystals == 1 then -- Если в коллекции inventoryParser() только один кристалл - отправляем его на рост, не сверяя перфект он или нет
+    transposer.transferItem(vacoomChest, outputChest, 1, slot, 1)
+elseif #crystals > 1 then
 
-    if #  > 0 then
-      -- Если больше одного - проверяем, есть ли перфект и отправляем его в хранилище если он есть,
-      --transposer.transferItem(vacoomChest, storage, 1, slot, 1).
-      --первый не перфект отправялем на рост
-      --добавить обработку на случай если все perfect
-      --transposer.transferItem(vacoomChest, outputChest, 1, slot, 1)
+    if #perfect > 0 then
+      -- Если есть не перфеткт - все перфект отправляем его в хранилище,
+      if #usual > 0 then
+          for _, slot in ipairs(perfect) do
+              transposer.transferItem(vacoomChest, storage, 1, slot, 1)
+              sleep(2)
+          end
+          transposer.transferItem(vacoomChest, outputChest, 1, random(#usual), 1)
+      else
+          --Если нет неперфекта, отправляем случайный перфект
+          transposer.transferItem(vacoomChest, outputChest, 1, random(#perfect), 1)
+      end
       
     else
-      -- Если нет перфекта первый из списка отправляется на рост  
-      -- transposer.transferItem(vacoomChest, outputChest, 1, slot, 1)
+      -- Если нет перфекта случайный из списка отправляется на рост  
+      transposer.transferItem(vacoomChest, outputChest, 1, random(#crystals), 1)
   else
     error("Crystal lost!")
 end
@@ -107,5 +114,3 @@ while true do
     sleep(SLEEP_TIME)
   end
 end
-
---transferItem(sourceSide:number, sinkSide:number, count:number, sourceSlot:number, sinkSlot:number):number
