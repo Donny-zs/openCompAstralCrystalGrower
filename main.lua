@@ -68,6 +68,10 @@ function itemManagment()
 local crys = inventory[1]
 local perf = inventory[2]
 local usua = inventory[3]
+
+if #crys == vacoomChestSize then
+    error("Do cuttings to gems!")
+end
   
 fillBath()
 
