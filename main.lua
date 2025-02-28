@@ -16,6 +16,10 @@ local vacoomChestSize = component.transposer.getInventorySize(vacoomChest) - 1 -
 local compareSlot = component.transposer.getInventorySize(vacoomChest) --последний слот, в котором хранится кристалл для сравнения(кладётся руками)
 local SLEEP_TIME = 10 --время паузы в глобальном цикле и между проверками
 
+function checkCompareCrystal()
+  transposer.getStackInSlot(vacoomChest, compareSlot)
+end
+
 function checkFluid() --Возвращает true если жидкость присутствует
   return redstone.getInput(fluidSensor) > 0 
 end
@@ -97,6 +101,7 @@ elseif #crystals > 1 then
     else
       -- Если нет перфекта случайный из списка отправляется на рост  
       transposer.transferItem(vacoomChest, outputChest, 1, random(#crystals), 1)
+    end
   else
     error("Crystal lost!")
 end
