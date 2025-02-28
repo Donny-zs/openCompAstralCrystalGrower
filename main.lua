@@ -24,10 +24,6 @@ function checkFluid() --Возвращает true если жидкость пр
   return redstone.getInput(fluidSensor) > 0 
 end
 
-function random(min, max)
-    return math.floor(math.random() * (max - min + 1)) + min
-end
-
 function fillBath()
   redstone.setOutput(fluidPlacer, 15)
   sleep(2)
