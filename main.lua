@@ -92,10 +92,10 @@ elseif #crystals > 1 then
               transposer.transferItem(vacoomChest, storage, 1, slot, 1)
               sleep(2)
           end
-          transposer.transferItem(vacoomChest, outputChest, 1, random(#usual), 1)
+          transposer.transferItem(vacoomChest, outputChest, 1, usual[random(#usual)], 1)
       else
           --Если нет неперфекта, отправляем случайный перфект
-          transposer.transferItem(vacoomChest, outputChest, 1, random(#perfect), 1)
+          transposer.transferItem(vacoomChest, outputChest, 1, perfect[random(#perfect)], 1)
       end
       
     else
