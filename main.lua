@@ -17,7 +17,7 @@ local compareSlot = component.transposer.getInventorySize(vacoomChest) --пос�
 local SLEEP_TIME = 10 --время паузы в глобальном цикле и между проверками
 
 function checkCompareCrystal()
-  transposer.getStackInSlot(vacoomChest, compareSlot)
+  return transposer.getStackInSlot(vacoomChest, compareSlot) ~= nil
 end
 
 function checkFluid() --Возвращает true если жидкость присутствует
