@@ -82,7 +82,7 @@ end
 fillBath()
 
 if #crystals == 1 then -- Если в коллекции inventoryParser() только один кристалл - отправляем его на рост, не сверяя перфект он или нет
-    transposer.transferItem(vacoomChest, outputChest, 1, slot, 1)
+    transposer.transferItem(vacoomChest, outputChest, 1, crystals[1], 1)
 elseif #crystals > 1 then
 
     if #perfect > 0 then
