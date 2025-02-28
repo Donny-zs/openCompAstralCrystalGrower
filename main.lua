@@ -44,7 +44,7 @@ function inventoryParser()
         local stack = transposer.getStackInSlot(vacoomChest, slot)
         if stack then
                 table.insert(crystals, slot)
-            if transposer.compareStacks(vacoomChest, slot, compareSlot) then
+            if transposer.compareStacks(vacoomChest, slot, compareSlot, true) then
                 table.insert(perfect, slot)
             else
                 table.insert(usual, slot)
